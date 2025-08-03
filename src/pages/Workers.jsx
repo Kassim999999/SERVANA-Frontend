@@ -16,6 +16,26 @@ const Workers = () => {
     setWorkers(prev => [...prev, worker]);
   };
 
+
+  const handleDelete = (id) => {
+  if (!window.confirm('Are you sure you want to suspend this worker?')) return;
+
+  fetch(`http://127.0.0.1:5000/api/workers/${id}`, {
+    method: 'DELETE'
+  })
+    .then((res) => {
+      if (res.ok) {
+        setWorkers((prev) => prev.filter((w) => w.id !== id));
+      } else {
+        console.error('Failed to delete worker');
+      }
+    })
+    .catch((err) => {
+      console.error('Error deleting worker:', err);
+    });
+};
+
+
   return (
     <div className="workers">
       <div className="workers-header">
@@ -50,7 +70,9 @@ const Workers = () => {
                 <td><span className={`badge ${w.status.toLowerCase()}`}>{w.status}</span></td>
                 <td>
                   <button className="link">Edit</button>
-                  <button className="link danger">Suspend</button>
+                  <button
+                  className="link danger"
+                  onClick={() => handleDelete(w.id)}>Suspend</button>
                 </td>
               </tr>
             ))}
