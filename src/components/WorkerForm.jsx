@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const AddWorkerForm = ({ onClose, onWorkerAdded }) => {
+const WorkerForm = ({ initialData = {}, onClose, onSave }) => {
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -8,33 +8,44 @@ const AddWorkerForm = ({ onClose, onWorkerAdded }) => {
     status: 'Available',
   });
 
+  useEffect(() => {
+    setForm({
+      name: initialData.name || '',
+      email: initialData.email || '',
+      service: initialData.service || '',
+      status: initialData.status || 'Available',
+    });
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const method = initialData.id ? 'PUT' : 'POST';
+    const url = initialData.id
+      ? `http://127.0.0.1:5000/api/workers/${initialData.id}`
+      : 'http://127.0.0.1:5000/api/workers';
 
-    fetch('http://127.0.0.1:5000/api/workers', {
-      method: 'POST',
+    fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     })
       .then((res) => res.json())
       .then((data) => {
-        onWorkerAdded(data); // update parent list
-        onClose(); // close the form
+        onSave(data);
+        onClose();
       })
-      .catch((err) => {
-        console.error('Failed to add worker:', err);
-      });
+      .catch((err) => console.error('Save error:', err));
   };
 
   return (
     <div className="form-modal">
       <form className="form-box" onSubmit={handleSubmit}>
-        <h3>Add New Worker</h3>
+        <h3>{initialData.id ? 'Edit Worker' : 'Add Worker'}</h3>
         <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
         <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
         <input name="service" placeholder="Service" value={form.service} onChange={handleChange} required />
@@ -43,7 +54,7 @@ const AddWorkerForm = ({ onClose, onWorkerAdded }) => {
           <option value="Unavailable">Unavailable</option>
         </select>
         <div className="form-buttons">
-          <button type="submit" className="btn-primary">Add Worker</button>
+          <button type="submit" className="btn-primary">Save</button>
           <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
         </div>
       </form>
@@ -51,4 +62,4 @@ const AddWorkerForm = ({ onClose, onWorkerAdded }) => {
   );
 };
 
-export default AddWorkerForm;
+export default WorkerForm;
