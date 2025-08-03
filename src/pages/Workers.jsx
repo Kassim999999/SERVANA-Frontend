@@ -1,22 +1,15 @@
 import './Workers.css';
+import { useEffect, useState } from 'react';
 
 const Workers = () => {
-  const workers = [
-    {
-      id: 1,
-      name: 'Grace Mwende',
-      email: 'grace@servana.com',
-      service: 'House Cleaning',
-      status: 'Available'
-    },
-    {
-      id: 2,
-      name: 'Samuel Otieno',
-      email: 'samuel@servana.com',
-      service: 'AC Repair',
-      status: 'Unavailable'
-    }
-  ];
+  const [workers, setWorkers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/workers')
+      .then(res => res.json())
+      .then(data => setWorkers(data))
+      .catch(err => console.error('Failed to fetch workers:', err));
+  }, []);
 
   return (
     <div className="workers">
@@ -40,7 +33,7 @@ const Workers = () => {
             {workers.map((w) => (
               <tr key={w.id}>
                 <td>{w.name}</td>
-                <td>{w.email}</td>
+                <td>{w.email || 'N/A'}</td>
                 <td>{w.service}</td>
                 <td><span className={`badge ${w.status.toLowerCase()}`}>{w.status}</span></td>
                 <td>
