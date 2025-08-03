@@ -1,22 +1,34 @@
 import './Workers.css';
 import { useEffect, useState } from 'react';
+import AddWorkerForm from '../components/AddWorkerForm';
 
 const Workers = () => {
   const [workers, setWorkers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/workers')
       .then(res => res.json())
-      .then(data => setWorkers(data))
-      .catch(err => console.error('Failed to fetch workers:', err));
+      .then(data => setWorkers(data));
   }, []);
+
+  const handleNewWorker = (worker) => {
+    setWorkers(prev => [...prev, worker]);
+  };
 
   return (
     <div className="workers">
       <div className="workers-header">
         <h2>Worker Management</h2>
-        <button className="btn-primary">+ Add Worker</button>
+        <button className="btn-primary" onClick={() => setShowForm(true)}>+ Add Worker</button>
       </div>
+
+      {showForm && (
+        <AddWorkerForm
+          onClose={() => setShowForm(false)}
+          onWorkerAdded={handleNewWorker}
+        />
+      )}
 
       <div className="table-wrapper">
         <table className="workers-table">
