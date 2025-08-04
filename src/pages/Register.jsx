@@ -5,7 +5,7 @@ import './Register.css';
 const Register = () => {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [form, setForm] = useState({ name: '', username: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -44,6 +44,14 @@ const handleSubmit = (e) => {
         <h2>Admin Register</h2>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
+        
+        <input
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
         <input
           name="username"
           placeholder="Username"

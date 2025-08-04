@@ -30,3 +30,18 @@
     width: 32px;
     height: 32px;
 }
+
+.logout-button {
+    margin-left: 1rem;
+    padding: 6px 12px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.logout-button:hover {
+    background-color: #e60000;
+}

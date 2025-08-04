@@ -26,7 +26,7 @@ const Login = () => {
       .then((data) => {
         if (data.token) {
           login(data.user, data.token);
-          navigate('/dashboard'); // redirect to dashboard
+          navigate('/dashboard');
         } else {
           setError(data.error || 'Login failed');
         }
