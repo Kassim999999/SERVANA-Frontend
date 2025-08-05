@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const ServiceForm = ({ initialData = {}, onClose, onSave }) => {
   const [form, setForm] = useState({
@@ -7,6 +8,8 @@ const ServiceForm = ({ initialData = {}, onClose, onSave }) => {
     price: '',
     status: 'Active',
   });
+  const { token } = useContext(AuthContext);
+
 
   useEffect(() => {
     setForm({
@@ -31,7 +34,9 @@ const ServiceForm = ({ initialData = {}, onClose, onSave }) => {
 
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 
+                  Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({ ...form, price: parseFloat(form.price) }),
     })
       .then((res) => res.json())

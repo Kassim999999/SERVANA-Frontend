@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import './UserForm.css';
 
 const UserForm = ({ onClose, onUserAdded, onUserUpdated, initialData = null }) => {
+  const { token } = useContext(AuthContext);
+
   const [form, setForm] = useState({
     name: initialData?.name || '',
-    email: initialData?.email || '',
     username: initialData?.username || '',
-    password: '',
+    email: initialData?.email || '',
     role: initialData?.role || 'User',
+    password: '' // only used for creation
   });
 
   const [error, setError] = useState('');
@@ -25,13 +28,24 @@ const UserForm = ({ onClose, onUserAdded, onUserUpdated, initialData = null }) =
       ? `http://127.0.0.1:5000/api/users/${initialData.id}`
       : 'http://127.0.0.1:5000/api/users';
 
-    const payload = { ...form };
-    if (initialData) delete payload.password; // Don't send password on update unless you're editing it
+    const payload = {
+      name: form.name,
+      username: form.username,
+      email: form.email,
+      role: form.role,
+    };
+
+    if (!initialData && form.password) {
+      payload.password = form.password;
+    }
 
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
     })
       .then(res => res.json())
       .then(data => {
@@ -60,18 +74,18 @@ const UserForm = ({ onClose, onUserAdded, onUserUpdated, initialData = null }) =
         />
 
         <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
+          name="username"
+          placeholder="Username"
+          value={form.username}
           onChange={handleChange}
           required
         />
 
         <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={form.email}
           onChange={handleChange}
           required
         />
@@ -83,7 +97,7 @@ const UserForm = ({ onClose, onUserAdded, onUserUpdated, initialData = null }) =
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            required={!initialData}
+            required
           />
         )}
 

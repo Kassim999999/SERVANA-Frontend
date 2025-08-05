@@ -1,48 +1,47 @@
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    background-color: #f5f7fa;
+    min-height: 100vh;
 }
 
-.dashboard-cards {
+.dashboard h2 {
+    font-size: 24px;
+    margin-bottom: 2rem;
+    color: #116530;
+}
+
+.dashboard-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
+    gap: 20px;
 }
 
-.card {
-    background: #fff;
-    padding: 16px;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.card-title {
-    font-size: 14px;
-    color: #666;
-}
-
-.card-value {
-    font-size: 20px;
-    font-weight: bold;
-    color: #116530;
-    margin-top: 8px;
-}
-
-.dashboard-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-}
-
-.dashboard-box {
-    background: #fff;
-    padding: 24px;
-    text-align: center;
+.stat-card {
+    background-color: #fff;
+    border-left: 5px solid #116530;
+    padding: 1.5rem;
     border-radius: 10px;
-    height: 180px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 28px;
+    color: #116530;
+}
+
+.stat-card p {
+    margin: 0;
+    margin-top: 8px;
+    font-size: 14px;
     color: #777;
-    font-size: 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }

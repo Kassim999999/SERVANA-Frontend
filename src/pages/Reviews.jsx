@@ -1,24 +1,36 @@
 import './Reviews.css';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Reviews = () => {
-  const reviews = [
-    {
-      id: '#REV001',
-      user: 'Alice Wambui',
-      worker: 'Grace Mwende',
-      rating: 4,
-      comment: 'Excellent service! Very professional and polite.',
-      date: '2025-08-01'
-    },
-    {
-      id: '#REV002',
-      user: 'John Kipkoech',
-      worker: 'Samuel Otieno',
-      rating: 2,
-      comment: 'The worker arrived late and left the job unfinished.',
-      date: '2025-08-02'
-    }
-  ];
+  const [reviews, setReviews] = useState([]);
+  const { token } = useContext(AuthContext); // ✅ Grab token
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/reviews', {
+      headers: {
+        Authorization: `Bearer ${token}`, // ✅ Secure GET request
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setReviews(data))
+      .catch((err) => console.error('Error fetching reviews:', err));
+  }, [token]);
+
+  const handleDelete = (id) => {
+    if (!window.confirm('Are you sure you want to delete this review?')) return;
+
+    fetch(`http://127.0.0.1:5000/api/reviews/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`, // ✅ Secure DELETE
+      },
+    }).then((res) => {
+      if (res.ok) {
+        setReviews((prev) => prev.filter((r) => r.id !== id));
+      }
+    });
+  };
 
   return (
     <div className="reviews">
@@ -27,27 +39,22 @@ const Reviews = () => {
         <table className="reviews-table">
           <thead>
             <tr>
-              <th>Review ID</th>
               <th>User</th>
-              <th>Worker</th>
-              <th>Rating</th>
               <th>Comment</th>
+              <th>Rating</th>
               <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {reviews.map((r, i) => (
-              <tr key={i}>
-                <td>{r.id}</td>
-                <td>{r.user}</td>
-                <td>{r.worker}</td>
-                <td><span className={`rating-badge rate-${r.rating}`}>{r.rating}⭐</span></td>
+            {reviews.map((r) => (
+              <tr key={r.id}>
+                <td>{r.user_name}</td>
                 <td>{r.comment}</td>
+                <td>{r.rating}</td>
                 <td>{r.date}</td>
                 <td>
-                  <button className="link">Reply</button>
-                  <button className="link danger">Delete</button>
+                  <button className="link danger" onClick={() => handleDelete(r.id)}>Delete</button>
                 </td>
               </tr>
             ))}

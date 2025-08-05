@@ -1,52 +1,40 @@
 import './Team.css';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Team = () => {
-  const members = [
-    {
-      id: 1,
-      name: 'Janet Njeri',
-      email: 'janet@servana.com',
-      role: 'Admin',
-      status: 'Active'
-    },
-    {
-      id: 2,
-      name: 'Kevin Otieno',
-      email: 'kevin@servana.com',
-      role: 'Support',
-      status: 'Suspended'
-    }
-  ];
+  const { token } = useContext(AuthContext);
+  const [team, setTeam] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/team', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setTeam(data))
+      .catch((err) => console.error('Failed to fetch team:', err));
+  }, [token]);
 
   return (
     <div className="team">
-      <div className="team-header">
-        <h2>Team Management</h2>
-        <button className="btn-primary">+ Add Team Member</button>
-      </div>
-
+      <h2>Team Members</h2>
       <div className="table-wrapper">
         <table className="team-table">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
               <th>Role</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody>
-            {members.map((m) => (
-              <tr key={m.id}>
-                <td>{m.name}</td>
-                <td>{m.email}</td>
-                <td>{m.role}</td>
-                <td><span className={`badge ${m.status.toLowerCase()}`}>{m.status}</span></td>
-                <td>
-                  <button className="link">Edit</button>
-                  <button className="link danger">Disable</button>
-                </td>
+            {team.map((member) => (
+              <tr key={member.id}>
+                <td>{member.name}</td>
+                <td>{member.role}</td>
+                <td>{member.email}</td>
               </tr>
             ))}
           </tbody>

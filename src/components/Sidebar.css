@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+
 .sidebar {
-    width: 240px;
-    background: #fff;
+    width: 260px;
+    background: #044924;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -10,10 +12,14 @@
 }
 
 .sidebar-title {
-    font-size: 20px;
+    font-size: 40px;
     font-weight: bold;
-    color: #116530;
+    color: #ffffff;
+    margin-top: 0%;
     margin-bottom: 2rem;
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .sidebar-nav {
@@ -23,19 +29,28 @@
 }
 
 .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
     text-decoration: none;
-    color: #444;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 14px;
+    color: #ffffff;
+    font-size: 18px;
 }
 
+.nav-item i {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.nav-item.active,
 .nav-item:hover {
-    background: #eee;
+    background-color: #7271715d;
+    border-left: 4px solid #116530;
+    color: #ffffff;
 }
 
-.nav-item.active {
-    background: #d1fae5;
-    color: #116530;
-    font-weight: bold;
+.nav-item.active i,
+.nav-item:hover i {
+    color: #ffffff;
 }

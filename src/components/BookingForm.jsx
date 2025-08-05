@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext'; // ✅
 
 const BookingForm = ({ initialData = {}, onClose, onSave }) => {
+  const { token } = useContext(AuthContext); // ✅
+
   const [form, setForm] = useState({
     user_name: '',
     worker_name: '',
@@ -34,8 +37,11 @@ const BookingForm = ({ initialData = {}, onClose, onSave }) => {
 
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // ✅
+      },
+      body: JSON.stringify(form),
     })
       .then((res) => res.json())
       .then((data) => {

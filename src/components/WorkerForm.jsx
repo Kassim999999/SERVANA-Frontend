@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const WorkerForm = ({ initialData = {}, onClose, onSave }) => {
   const [form, setForm] = useState({
@@ -7,6 +8,8 @@ const WorkerForm = ({ initialData = {}, onClose, onSave }) => {
     service: '',
     status: 'Available',
   });
+
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     setForm({
@@ -31,7 +34,10 @@ const WorkerForm = ({ initialData = {}, onClose, onSave }) => {
 
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(form),
     })
       .then((res) => res.json())
@@ -46,9 +52,26 @@ const WorkerForm = ({ initialData = {}, onClose, onSave }) => {
     <div className="form-modal">
       <form className="form-box" onSubmit={handleSubmit}>
         <h3>{initialData.id ? 'Edit Worker' : 'Add Worker'}</h3>
-        <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
-        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-        <input name="service" placeholder="Service" value={form.service} onChange={handleChange} required />
+        <input
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
+        <input
+          name="service"
+          placeholder="Service"
+          value={form.service}
+          onChange={handleChange}
+          required
+        />
         <select name="status" value={form.status} onChange={handleChange}>
           <option value="Available">Available</option>
           <option value="Unavailable">Unavailable</option>

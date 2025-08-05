@@ -1,16 +1,23 @@
 import './Workers.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import WorkerForm from '../components/WorkerForm';
+import { AuthContext } from '../context/AuthContext';
 
 const Workers = () => {
   const [workers, setWorkers] = useState([]);
   const [formData, setFormData] = useState(null);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/workers')
+    fetch('http://127.0.0.1:5000/api/workers', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
-      .then(data => setWorkers(data));
-  }, []);
+      .then(data => setWorkers(data))
+      .catch(err => console.error('Error fetching workers:', err));
+  }, [token]);
 
   const handleWorkerSaved = (worker) => {
     setWorkers((prev) => {
@@ -27,7 +34,10 @@ const Workers = () => {
     if (!window.confirm('Are you sure you want to suspend this worker?')) return;
 
     fetch(`http://127.0.0.1:5000/api/workers/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((res) => {
         if (res.ok) {

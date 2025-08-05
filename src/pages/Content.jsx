@@ -1,58 +1,49 @@
-import './Content.css';
+import './Audit.css';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
-const Content=()=> {
-    const items=[ {
-        title: 'FAQs',
-            description: 'Manage frequently asked questions shown to users.',
-            button: 'Edit FAQs'
-    }
+const Audit = () => {
+  const { token } = useContext(AuthContext);
+  const [logs, setLogs] = useState([]);
 
-    ,
-    {
-    title: 'Terms & Conditions',
-        description: 'Update platform policies, legal disclaimers, and terms.',
-        button: 'Edit Terms'
-}
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/audit', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setLogs(data))
+      .catch((err) => console.error('Failed to fetch audit logs:', err));
+  }, [token]);
 
-,
-{
-title: 'SEO & Landing Pages',
-    description: 'Optimize homepage, meta tags, and search keywords.',
-    button: 'Edit SEO Content'
-}
+  return (
+    <div className="audit">
+      <h2>Audit Logs</h2>
+      <div className="table-wrapper">
+        <table className="audit-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Action</th>
+              <th>Target</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {logs.map((log) => (
+              <tr key={log.id}>
+                <td>{log.user}</td>
+                <td>{log.action}</td>
+                <td>{log.target}</td>
+                <td>{log.timestamp}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
-,
-{
-title: 'Testimonials & Banners',
-    description: 'Update client testimonials and homepage banners.',
-    button: 'Manage Content'
-}
-
-];
-
-return (<div className="content-management" > <h2>Content Management</h2> <div className="content-grid" > {
-        items.map((item, i)=> (<div key= {
-                    i
-                }
-
-                className="content-card" > <h3> {
-                    item.title
-                }
-
-                </h3> <p> {
-                    item.description
-                }
-
-                </p> <button className="btn-primary" > {
-                    item.button
-                }
-
-                </button> </div>))
-    }
-
-    </div> </div>);
-}
-
-;
-
-export default Content;
+export default Audit;

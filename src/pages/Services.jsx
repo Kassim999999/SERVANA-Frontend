@@ -1,10 +1,13 @@
 import './Services.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,  useContext } from 'react';
 import ServiceForm from '../components/ServiceForm';
+import { AuthContext } from '../context/AuthContext';
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [formData, setFormData] = useState(null);
+  const { token } = useContext(AuthContext);
+
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/services')
@@ -28,7 +31,10 @@ const Services = () => {
     if (!window.confirm('Are you sure you want to delete this service?')) return;
 
     fetch(`http://127.0.0.1:5000/api/services/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+    'Authorization': `Bearer ${token}`,
+  }
     })
       .then((res) => {
         if (res.ok) {

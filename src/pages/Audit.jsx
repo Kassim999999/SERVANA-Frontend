@@ -1,22 +1,21 @@
 import './Audit.css';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Audit = () => {
-  const logs = [
-    {
-      id: 1,
-      user: 'Admin - Janet Njeri',
-      action: 'Updated worker profile',
-      timestamp: '2025-08-03 10:45 AM',
-      ip: '102.45.210.19'
-    },
-    {
-      id: 2,
-      user: 'Support - Kevin Otieno',
-      action: 'Suspended user John Kipkoech',
-      timestamp: '2025-08-03 09:22 AM',
-      ip: '197.23.88.12'
-    }
-  ];
+  const { token } = useContext(AuthContext);
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/audit', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setLogs(data))
+      .catch((err) => console.error('Failed to fetch audit logs:', err));
+  }, [token]);
 
   return (
     <div className="audit">
@@ -27,8 +26,8 @@ const Audit = () => {
             <tr>
               <th>User</th>
               <th>Action</th>
+              <th>Target</th>
               <th>Timestamp</th>
-              <th>IP Address</th>
             </tr>
           </thead>
           <tbody>
@@ -36,8 +35,8 @@ const Audit = () => {
               <tr key={log.id}>
                 <td>{log.user}</td>
                 <td>{log.action}</td>
+                <td>{log.target}</td>
                 <td>{log.timestamp}</td>
-                <td>{log.ip}</td>
               </tr>
             ))}
           </tbody>
