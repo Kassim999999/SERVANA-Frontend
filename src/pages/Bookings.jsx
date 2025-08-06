@@ -13,6 +13,7 @@ const Bookings = () => {
     pending: 0,
     confirmed: 0,
     completed: 0,
+    cancelled: 0,
   });
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Bookings = () => {
           pending: data.filter(b => b.status === 'Pending').length,
           confirmed: data.filter(b => b.status === 'Confirmed').length,
           completed: data.filter(b => b.status === 'Completed').length,
+          cancelled: data.filter(b => b.status === 'Cancelled').length,
         };
         setBookingStats(stats);
       });
@@ -72,6 +74,7 @@ const updateBookingStats = (data) => {
     pending: data.filter(b => b.status === 'Pending').length,
     confirmed: data.filter(b => b.status === 'Confirmed').length,
     completed: data.filter(b => b.status === 'Completed').length,
+    cancelled: data.filter(b => b.status === 'Cancelled').length,
   };
   setBookingStats(stats);
 };
@@ -86,21 +89,25 @@ const updateBookingStats = (data) => {
 
       {/* ✅ Stats Cards Section */}
       <div className="booking-cards">
-        <div className="card">
+        <div className="card" id='b'>
           <h3>{bookingStats.total}</h3>
           <p>Total Bookings</p>
         </div>
-        <div className="card">
+        <div className="card" id='y'>
           <h3>{bookingStats.pending}</h3>
           <p>Pending</p>
         </div>
-        <div className="card">
+        <div className="card" id='o'>
           <h3>{bookingStats.confirmed}</h3>
           <p>Confirmed</p>
         </div>
-        <div className="card">
+        <div className="card" id='g'>
           <h3>{bookingStats.completed}</h3>
           <p>Completed</p>
+        </div>
+        <div className="card" id='r'>
+          <h3>{bookingStats.cancelled}</h3>
+          <p>Cancelled</p>
         </div>
       </div>
 

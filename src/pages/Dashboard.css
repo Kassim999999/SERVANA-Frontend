@@ -45,3 +45,11 @@
     font-size: 14px;
     color: #777;
 }
+
+.dashboard-chart {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}

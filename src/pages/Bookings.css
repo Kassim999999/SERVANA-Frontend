@@ -100,7 +100,31 @@
     padding: 16px;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &#b{
+        border-style: groove;
+        border-color: rgb(0, 0, 255);
+    }
+
+    &#y{
+        border-style: groove;
+        border-color: rgb(255, 174, 0);
+    }
+    
+    &#o{
+        border-style: groove;
+        border-color: rgb(255, 115, 1);
+    }
+
+    &#g{
+        border-style: groove;
+        border-color: rgb(7, 211, 51);
+    }
+
+    &#r{
+        border-style:groove;
+        border-color: rgb(255, 0, 0);
+    }
 }
 
 .booking-cards .card h3 {

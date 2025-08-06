@@ -38,7 +38,7 @@
 
 .link {
     background: none;
-    border: none;
+
     color: #1d4ed8;
     margin-right: 0.5rem;
     cursor: pointer;
@@ -50,4 +50,5 @@
 
 .link.danger {
     color: #b91c1c;
+    
 }
