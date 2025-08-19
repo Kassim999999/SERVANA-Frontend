@@ -9,7 +9,7 @@
 .dashboard h2 {
     font-size: 24px;
     margin-bottom: 2rem;
-    color: #116530;
+    color: #003B00;
 }
 
 .dashboard-stats {
@@ -20,7 +20,7 @@
 
 .stat-card {
     background-color: #fff;
-    border-left: 5px solid #116530;
+    border-left: 5px solid #003B00;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -36,18 +36,18 @@
 .stat-card h3 {
     margin: 0;
     font-size: 28px;
-    color: #116530;
+    color: #003B00;
 }
 
 .stat-card p {
     margin: 0;
     margin-top: 8px;
     font-size: 14px;
-    color: #777;
+    color: #003B00;
 }
 
 .dashboard-chart {
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
     border-radius: 12px;
     margin-top: 20px;

@@ -2,7 +2,7 @@
 
 .sidebar {
     width: 260px;
-    background: #044924;
+    background: #F9FAFB;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -14,7 +14,7 @@
 .sidebar-title {
     font-size: 40px;
     font-weight: bold;
-    color: #ffffff;
+    color: #01C03E;
     margin-top: 0%;
     margin-bottom: 2rem;
     font-family: "Sigmar", sans-serif;
@@ -34,19 +34,19 @@
     gap: 10px;
     padding: 12px 20px;
     text-decoration: none;
-    color: #ffffff;
+    color: #01C03E;
     font-size: 18px;
 }
 
 .nav-item i {
     font-size: 16px;
-    color: #ffffff;
+    color: #01C03E;
 }
 
 .nav-item.active,
 .nav-item:hover {
     background-color: #7271715d;
-    border-left: 4px solid #116530;
+    border-left: 4px solid #01C03E;
     color: #ffffff;
 }
 
