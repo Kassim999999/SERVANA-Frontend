@@ -11,7 +11,7 @@ const Analytics = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!token) return; // ✅ Wait until token is available
+    if (!token) return;
 
     const controller = new AbortController();
 

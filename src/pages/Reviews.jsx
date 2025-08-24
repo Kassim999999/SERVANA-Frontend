@@ -4,12 +4,12 @@ import { AuthContext } from '../context/AuthContext';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const { token } = useContext(AuthContext); // ✅ Grab token
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/reviews', {
       headers: {
-        Authorization: `Bearer ${token}`, // ✅ Secure GET request
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -23,7 +23,7 @@ const Reviews = () => {
     fetch(`http://127.0.0.1:5000/api/reviews/${id}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token}`, // ✅ Secure DELETE
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
       if (res.ok) {

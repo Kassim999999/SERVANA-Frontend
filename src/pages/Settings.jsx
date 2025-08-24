@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 const Settings = () => {
-  const { token, user } = useContext(AuthContext); // ✅ Secure access
+  const { token, user } = useContext(AuthContext);
   const [settings, setSettings] = useState({ emailNotifications: true });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Settings = () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // ✅ Include token
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updated),
     })

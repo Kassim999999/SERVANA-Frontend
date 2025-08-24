@@ -4,12 +4,12 @@ import { AuthContext } from '../context/AuthContext';
 
 const Payments = () => {
   const [payments, setPayments] = useState([]);
-  const { token } = useContext(AuthContext); // ✅ Use token
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/payments', {
       headers: {
-        Authorization: `Bearer ${token}`, // ✅ Secure API request
+        Authorization: `Bearer ${token}`, // Secure API request
       },
     })
       .then((res) => res.json())
@@ -23,7 +23,7 @@ const Payments = () => {
     fetch(`http://127.0.0.1:5000/api/payments/${id}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token}`, // ✅ Secure DELETE
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
       if (res.ok) {

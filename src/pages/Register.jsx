@@ -26,7 +26,7 @@ const handleSubmit = (e) => {
     .then((res) => res.json())
     .then((data) => {
       if (data.message) {
-        localStorage.setItem('hasRegistered', 'true'); // ✅ Save flag
+        localStorage.setItem('hasRegistered', 'true'); //Save flag
         setSuccess(data.message);
         setTimeout(() => navigate('/login'), 1500);
       } else {

@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext'; // ✅
+import { AuthContext } from '../context/AuthContext';
 
 const BookingForm = ({ initialData = {}, onClose, onSave }) => {
-  const { token } = useContext(AuthContext); // ✅
+  const { token } = useContext(AuthContext);
 
   const [form, setForm] = useState({
     user_name: '',
@@ -39,7 +39,7 @@ const BookingForm = ({ initialData = {}, onClose, onSave }) => {
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // ✅
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(form),
     })

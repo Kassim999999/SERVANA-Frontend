@@ -10,7 +10,7 @@ const UserForm = ({ onClose, onUserAdded, onUserUpdated, initialData = null }) =
     username: initialData?.username || '',
     email: initialData?.email || '',
     role: initialData?.role || 'User',
-    password: '' // only used for creation
+    password: ''
   });
 
   const [error, setError] = useState('');

@@ -87,7 +87,7 @@ const updateBookingStats = (data) => {
         <button className="btn-primary" onClick={() => setFormData({})}>+ New Booking</button>
       </div>
 
-      {/* ✅ Stats Cards Section */}
+      {/*Stats Cards Section */}
       <div className="booking-cards">
         <div className="card" id='b'>
           <h3>{bookingStats.total}</h3>
